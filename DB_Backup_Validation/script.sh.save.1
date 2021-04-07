@@ -1,0 +1,20 @@
+
+#!/bin/bash
+
+gsutil ls gs://prod_databases_backups/ | awk -F'[/]' '{print $4}' > /opt/DB_Backup_script/DB_Backup_Validation/ALL_DBS
+
+#cat /opt/DB_Backup_script/DB_Backup_Validation/ALL_DBS
+
+
+while read line 
+do
+ echo $line; 
+#echo $(gsutil ls gs://prod_databases_backups/$line | wc -l)
+COUNT=$(gsutil ls gs://prod_databases_backups/$line | wc -l)
+echo $COUNT
+#if [[ "$COUNT" -lt 24 ]];
+#then echo "backups are not proper"
+#else
+#echo "proper"
+#fi
+done < /opt/DB_Backup_script/DB_Backup_Validation/ALL_DBS;
